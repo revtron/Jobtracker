@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Tracker - Resume Improvement Workflow</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; padding: 20px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 28px; margin-bottom: 8px; }
+  .subtitle { color: #94a3b8; margin-bottom: 24px; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .stat-card { background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155; }
+  .stat-card .label { font-size: 13px; color: #94a3b8; margin-bottom: 4px; }
+  .stat-card .value { font-size: 32px; font-weight: 700; }
+  .job-card { background: #1e293b; border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid #334155; }
+  .job-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+  .job-title { font-size: 20px; font-weight: 600; }
+  .job-company { color: #94a3b8; font-size: 14px; }
+  .match-badge { padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 18px; }
+  .match-high { background: #064e3b; color: #6ee7b7; }
+  .match-mid { background: #713f12; color: #fde68a; }
+  .match-low { background: #7f1d1d; color: #fca5a5; }
+  .skills-section { margin-top: 12px; }
+  .skills-section h3 { font-size: 14px; margin-bottom: 8px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag { padding: 4px 12px; border-radius: 6px; font-size: 13px; }
+  .tag-matched { background: #064e3b; color: #6ee7b7; border: 1px solid #065f46; }
+  .tag-missing { background: #7f1d1d; color: #fca5a5; border: 1px solid #991b1b; }
+  .tag-extra { background: #1e3a5f; color: #93c5fd; border: 1px solid #1e40af; }
+  .progress-bar { height: 8px; background: #334155; border-radius: 4px; margin: 12px 0; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+  .progress-fill.high { background: linear-gradient(90deg, #059669, #10b981); }
+  .progress-fill.mid { background: linear-gradient(90deg, #d97706, #f59e0b); }
+  .progress-fill.low { background: linear-gradient(90deg, #dc2626, #ef4444); }
+  .recommendations { background: #1e293b; border-radius: 12px; padding: 24px; margin-top: 24px; border: 1px solid #334155; }
+  .recommendations h2 { font-size: 18px; margin-bottom: 16px; }
+  .rec-item { padding: 8px 0; border-bottom: 1px solid #334155; display: flex; align-items: center; gap: 8px; }
+  .rec-item:last-child { border-bottom: none; }
+  .priority-high { color: #fca5a5; }
+  .priority-mid { color: #fde68a; }
+  .priority-low { color: #6ee7b7; }
+  .status-badge { font-size: 13px; padding: 4px 10px; border-radius: 12px; }
+  .status-applied { background: #1e3a5f; color: #93c5fd; }
+  .status-interview { background: #713f12; color: #fde68a; }
+  .status-offer { background: #064e3b; color: #6ee7b7; }
+  .status-rejected { background: #7f1d1d; color: #fca5a5; }
+  .footer { text-align: center; color: #475569; font-size: 13px; margin-top: 32px; padding: 20px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1> Job Application Tracker</h1>
+  <p class="subtitle">Resume gap analysis & improvement workflow · Updated Jul 26, 2026</p>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="label">Total Applications</div>
+      <div class="value">1</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Avg Match Score</div>
+      <div class="value">66%</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Skills in Resume</div>
+      <div class="value">44</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Gaps to Fill</div>
+      <div class="value">11</div>
+    </div>
+  </div>
+
+  <div id="jobsContainer">
+    <div class="job-card">
+      <div class="job-header">
+        <div>
+          <div class="job-title">Engineer</div>
+          <div class="job-company">Hpe Pcai Coe · <span class="status-badge status-applied">Applied</span></div>
+        </div>
+        <div class="match-badge match-mid">66%</div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill mid" style="width: 66%"></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="skills-section">
+          <h3> Matched (21)</h3>
+          <div class="skill-tags"><span class="skill-tag tag-matched">ai</span><span class="skill-tag tag-matched">ansible</span><span class="skill-tag tag-matched">aws</span><span class="skill-tag tag-matched">azure</span><span class="skill-tag tag-matched">bash</span><span class="skill-tag tag-matched">deployment</span><span class="skill-tag tag-matched">helm</span><span class="skill-tag tag-matched">iam</span><span class="skill-tag tag-matched">java</span><span class="skill-tag tag-matched">javascript</span><span class="skill-tag tag-matched">kubernetes</span><span class="skill-tag tag-matched">linux</span><span class="skill-tag tag-matched">load balancer</span><span class="skill-tag tag-matched">microservices</span><span class="skill-tag tag-matched">ml</span><span class="skill-tag tag-matched">networking</span><span class="skill-tag tag-matched">optimization</span><span class="skill-tag tag-matched">performance</span><span class="skill-tag tag-matched">python</span><span class="skill-tag tag-matched">shell</span><span class="skill-tag tag-matched">terraform</span></div>
+        </div>
+        <div class="skills-section">
+          <h3> Missing (11)</h3>
+          <div class="skill-tags"><span class="skill-tag tag-missing">apache</span><span class="skill-tag tag-missing">cloudformation</span><span class="skill-tag tag-missing">debian</span><span class="skill-tag tag-missing">leadership</span><span class="skill-tag tag-missing">machine learning</span><span class="skill-tag tag-missing">mysql</span><span class="skill-tag tag-missing">powershell</span><span class="skill-tag tag-missing">rhel</span><span class="skill-tag tag-missing">sql</span><span class="skill-tag tag-missing">ubuntu</span><span class="skill-tag tag-missing">windows</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recommendations">
+    <h2> Resume Improvement Plan</h2>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add apache to resume (appears in 1 job)</div>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add cloudformation to resume (appears in 1 job)</div>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add debian to resume (appears in 1 job)</div>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add leadership to resume (appears in 1 job)</div>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add machine learning to resume (appears in 1 job)</div>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add mysql to resume (appears in 1 job)</div>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add powershell to resume (appears in 1 job)</div>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add rhel to resume (appears in 1 job)</div>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add sql to resume (appears in 1 job)</div>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add ubuntu to resume (appears in 1 job)</div>
+      <div class="rec-item"><span class="priority-mid">Medium</span> Add windows to resume (appears in 1 job)</div>
+  </div>
+
+  <div class="footer">Auto-generated by track.py</div>
+</div>
+</body>
+</html>
